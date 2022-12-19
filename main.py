@@ -1,8 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 import json 
 from syncmssql.connect import connect_to_mssql
 from controller import get_all_log
 import pyodbc
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
+
 
 app = FastAPI()
 
@@ -20,6 +23,5 @@ def read_root():
 @app.get("/log")
 def get_log():
     log = get_all_log(cursor)
-    print(log)
-    print(type(log))
-    return {}
+    
+    return {"log":log}
